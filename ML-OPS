@@ -1,0 +1,129 @@
+Day 02 – Linear Regression
+
+1. What is Linear Regression?
+
+Linear Regression is a supervised machine learning algorithm used to predict continuous numerical values by identifying a linear relationship between independent variables (features) and a dependent variable (target).
+
+Example: Predicting house prices based on area, number of bedrooms, and location-related features.
+
+2. Types of Linear Regression
+
+Simple Linear Regression
+
+Uses one independent variable to predict the target.
+
+Mathematical equation:
+
+[
+y = mx + c
+]
+
+Where:
+
+y = Predicted output
+
+x = Input feature
+
+m = Slope (coefficient)
+
+c = Intercept
+
+Multiple Linear Regression
+
+Uses two or more independent variables.
+
+[
+y = b_0 + b_1x_1 + b_2x_2 + \cdots + b_nx_n
+]
+
+Where:
+
+(b_0) = Intercept
+
+(b_1, b_2, \ldots, b_n) = Coefficients
+
+(x_1, x_2, \ldots, x_n) = Input features
+
+3. How Does It Work?
+
+Collect training data.
+
+Identify input features and target variable.
+
+Fit a linear relationship between them.
+
+Calculate prediction errors.
+
+Adjust model coefficients to minimize errors.
+
+Evaluate predictions using test data.
+
+4. Cost Function – Mean Squared Error
+
+Mean Squared Error (MSE) measures the average squared difference between actual and predicted values.
+
+[
+MSE = \frac{1}{n}\sum_{i=1}^{n}(y_i-\hat{y}_i)^2
+]
+
+A lower MSE generally indicates better predictions on the evaluated dataset.
+
+5. Gradient Descent
+
+Gradient Descent is an optimization algorithm used to minimize a model's cost function.
+
+It updates model parameters iteratively in the direction that reduces the loss.
+
+[
+\theta := \theta-\alpha \frac{\partial J(\theta)}{\partial \theta}
+]
+
+Where:
+
+(\theta) = Model parameter
+
+(\alpha) = Learning rate
+
+(J(\theta)) = Cost function
+
+6. Important Assumptions
+
+Linearity between predictors and target.
+
+Independence of errors.
+
+Constant variance of errors (homoscedasticity).
+
+Residuals are approximately normally distributed for certain statistical inference procedures.
+
+No severe multicollinearity in multiple regression.
+
+7. Evaluation Metrics
+
+MAE: Mean Absolute Error
+
+MSE: Mean Squared Error
+
+RMSE: Root Mean Squared Error
+
+R²: Coefficient of Determination
+
+8. Advantages
+
+Simple and easy to interpret.
+
+Computationally efficient.
+
+Provides a useful baseline model.
+
+Coefficients help understand feature relationships.
+
+9. Limitations
+
+Cannot naturally model complex nonlinear relationships.
+
+Sensitive to outliers.
+
+Performance can be affected by multicollinearity.
+
+Relies on assumptions that may not hold in real-world data.
