@@ -124,6 +124,126 @@ Cannot naturally model complex nonlinear relationships.
 
 Sensitive to outliers.
 
+
+
+# Day 02 – Linear Regression
+
+## 1. What is Linear Regression?
+
+Linear Regression is a supervised machine learning algorithm used to predict continuous numerical values by finding a relationship between independent variables (input features) and a dependent variable (target).
+
+**Example:** Predicting house prices using house area, number of bedrooms, and property age.
+
+## 2. Types of Linear Regression
+
+### A. Simple Linear Regression
+
+Uses one independent variable to predict an output.
+
+Mathematical equation:
+
+\[
+y = mx + c
+\]
+
+Where:
+- y = Predicted output
+- x = Input feature
+- m = Slope or coefficient
+- c = Intercept
+
+### B. Multiple Linear Regression
+
+Uses multiple independent variables to predict an output.
+
+\[
+y = b_0+b_1x_1+b_2x_2+\cdots+b_nx_n
+\]
+
+Example: Predicting house prices using area, bedrooms, and age.
+
+## 3. How Does Linear Regression Work?
+
+1. Collect a dataset.
+2. Identify input features and target variable.
+3. Split data into training and testing sets.
+4. Train the regression model.
+5. Generate predictions.
+6. Calculate prediction errors.
+7. Evaluate model performance.
+
+## 4. Cost Function – Mean Squared Error
+
+Mean Squared Error (MSE) measures the average squared difference between actual and predicted values.
+
+\[
+MSE = \frac{1}{n}\sum_{i=1}^{n}(y_i-\hat{y}_i)^2
+\]
+
+A lower MSE indicates smaller squared prediction errors on the evaluated dataset.
+
+## 5. Gradient Descent
+
+Gradient Descent is an optimization algorithm used to minimize the cost function by updating model parameters iteratively.
+
+\[
+\theta = \theta-\alpha\frac{\partial J(\theta)}{\partial\theta}
+\]
+
+Where:
+- θ = Model parameter
+- α = Learning rate
+- J(θ) = Cost function
+
+## 6. Important Assumptions
+
+- Linear relationship between predictors and target.
+- Independent errors.
+- Constant variance of errors.
+- Residuals are approximately normally distributed for common statistical inference procedures.
+- No severe multicollinearity among predictors.
+
+## 7. Evaluation Metrics
+
+| Metric | Purpose |
+|---|---|
+| MAE | Average absolute prediction error |
+| MSE | Average squared prediction error |
+| RMSE | Square root of MSE |
+| R² Score | Measures explained variance |
+
+## 8. Advantages
+
+- Easy to understand and interpret.
+- Computationally efficient.
+- Useful as a baseline model.
+- Coefficients help explain relationships between features and predictions.
+
+## 9. Limitations
+
+- Cannot naturally capture complex nonlinear relationships.
+- Sensitive to outliers.
+- Multicollinearity can make coefficients unstable.
+- Performance depends on whether its assumptions are reasonably satisfied.
+
+## 10. Interview Questions
+
+1. What is Linear Regression?
+2. What is the difference between simple and multiple linear regression?
+3. What is a cost function?
+4. Explain Gradient Descent.
+5. What is the learning rate?
+6. What is multicollinearity?
+7. Explain MAE vs MSE.
+8. What does the R² score represent?
+9. How do outliers affect Linear Regression?
+10. What assumptions does Linear Regression make?
+
+## Key Takeaway
+
+Linear Regression is a fundamental supervised learning algorithm. Understanding its equation, cost function, optimization process, assumptions, and evaluation metrics is essential for building regression models.
+
+**Next Topic:** Logistic Regression – Classification, Sigmoid Function, and Cross-Entropy Loss.
 Performance can be affected by multicollinearity.
 
 Relies on assumptions that may not hold in real-world data.
