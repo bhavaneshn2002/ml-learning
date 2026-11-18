@@ -247,3 +247,353 @@ Linear Regression is a fundamental supervised learning algorithm. Understanding 
 Performance can be affected by multicollinearity.
 
 Relies on assumptions that may not hold in real-world data.
+
+
+
+
+
+# Day 03 – Logistic Regression
+
+## 1. What is Logistic Regression?
+
+Logistic Regression is a supervised machine learning algorithm used for classification problems. It predicts the probability that an input belongs to a particular class.
+
+Unlike Linear Regression, which predicts continuous numerical values, Logistic Regression predicts categorical outcomes.
+
+**Examples:**
+- Predicting whether an email is Spam or Not Spam.
+- Predicting whether a customer will leave a company (Churn or No Churn).
+- Predicting whether a patient has a particular disease (Positive or Negative).
+- Predicting whether a transaction is Fraudulent or Legitimate.
+
+## 2. Types of Logistic Regression
+
+### A. Binary Logistic Regression
+
+Used when the target variable contains only two possible classes.
+
+**Example:**
+- 0 = No
+- 1 = Yes
+
+Applications:
+- Spam detection.
+- Fraud detection.
+- Customer churn prediction.
+
+### B. Multinomial Logistic Regression
+
+Used when the target variable contains three or more unordered categories.
+
+**Example:**
+
+Predicting the type of fruit:
+- Apple
+- Banana
+- Orange
+
+### C. Ordinal Logistic Regression
+
+Used when the target variable contains three or more categories with a meaningful order.
+
+**Example:**
+
+Customer satisfaction:
+- 1 = Poor
+- 2 = Average
+- 3 = Good
+- 4 = Excellent
+
+## 3. How Does Logistic Regression Work?
+
+Logistic Regression works by calculating a weighted sum of input features and converting the result into a probability using the Sigmoid Function.
+
+**Step-by-step process:**
+
+1. Collect a labelled dataset.
+2. Identify input features and target variable.
+3. Preprocess the data.
+4. Split the dataset into training and testing sets.
+5. Calculate the linear combination of input features.
+6. Apply the Sigmoid Function to convert the result into a probability.
+7. Apply a classification threshold to determine the predicted class.
+8. Evaluate model performance using classification metrics.
+
+## 4. Sigmoid Function
+
+The Sigmoid Function converts any real-valued number into a probability between 0 and 1.
+
+**Mathematical Equation:**
+
+\[
+\sigma(z)=\frac{1}{1+e^{-z}}
+\]
+
+Where:
+
+- σ(z) = Sigmoid output.
+- z = Weighted sum of input features.
+- e = Euler's number (approximately 2.718).
+
+The weighted sum is calculated as:
+
+\[
+z=b_0+b_1x_1+b_2x_2+\cdots+b_nx_n
+\]
+
+**Example:**
+
+If the model predicts a probability of 0.85, it means the model estimates an 85% probability of belonging to the positive class.
+
+### Classification Threshold
+
+The default classification threshold is usually 0.5.
+
+- Probability >= 0.5 → Class 1
+- Probability < 0.5 → Class 0
+
+The threshold can be adjusted depending on the application and the cost of false positives and false negatives.
+
+## 5. Cost Function – Binary Cross-Entropy Loss
+
+Binary Cross-Entropy (Log Loss) measures the difference between actual class labels and predicted probabilities.
+
+**Mathematical Equation:**
+
+\[
+J=-\frac{1}{n}\sum_{i=1}^{n}
+[y_i\log(\hat{y}_i)+(1-y_i)\log(1-\hat{y}_i)]
+\]
+
+Where:
+
+- J = Cost function.
+- n = Number of observations.
+- yᵢ = Actual class label (0 or 1).
+- ŷᵢ = Predicted probability.
+
+A lower Binary Cross-Entropy loss generally indicates better probability predictions on the evaluated dataset.
+
+## 6. Optimization – Gradient Descent
+
+Gradient Descent is an optimization algorithm used to minimize the loss function by updating model parameters iteratively.
+
+**Update Rule:**
+
+\[
+\theta=\theta-\alpha\frac{\partial J(\theta)}{\partial\theta}
+\]
+
+Where:
+
+- θ = Model parameter.
+- α = Learning rate.
+- J(θ) = Cost function.
+
+During training, Gradient Descent adjusts the model coefficients and intercept to reduce prediction errors.
+
+Other optimization algorithms commonly used include:
+
+- Batch Gradient Descent.
+- Stochastic Gradient Descent (SGD).
+- Mini-Batch Gradient Descent.
+- L-BFGS.
+
+## 7. Important Assumptions
+
+- The target variable is categorical.
+- Observations are independent.
+- There is a linear relationship between continuous predictors and the log-odds of the outcome.
+- No severe multicollinearity among independent variables.
+- A sufficiently large sample size is available for reliable estimation.
+- No extreme influential observations that excessively distort the model.
+
+## 8. Evaluation Metrics
+
+| Metric | Purpose |
+|---|---|
+| Accuracy | Percentage of correctly classified observations |
+| Precision | Percentage of predicted positive cases that are actually positive |
+| Recall | Percentage of actual positive cases correctly identified |
+| F1-Score | Harmonic mean of Precision and Recall |
+| Confusion Matrix | Summarizes correct and incorrect classifications |
+| ROC-AUC | Measures the model's ability to distinguish between classes |
+| Log Loss | Evaluates the quality of predicted probabilities |
+
+### Confusion Matrix
+
+A Confusion Matrix contains four important values:
+
+- True Positive (TP): Correctly predicted positive cases.
+- True Negative (TN): Correctly predicted negative cases.
+- False Positive (FP): Negative cases incorrectly predicted as positive.
+- False Negative (FN): Positive cases incorrectly predicted as negative.
+
+**Important Formulas:**
+
+Accuracy:
+
+\[
+Accuracy=\frac{TP+TN}{TP+TN+FP+FN}
+\]
+
+Precision:
+
+\[
+Precision=\frac{TP}{TP+FP}
+\]
+
+Recall:
+
+\[
+Recall=\frac{TP}{TP+FN}
+\]
+
+F1-Score:
+
+\[
+F1=2\times\frac{Precision\times Recall}{Precision+Recall}
+\]
+
+## 9. Advantages
+
+- Simple and easy to implement.
+- Computationally efficient.
+- Provides probability estimates.
+- Easy to interpret model coefficients.
+- Works well for linearly separable classification problems.
+- Supports binary and multiclass classification extensions.
+
+## 10. Limitations
+
+- Cannot naturally capture complex nonlinear decision boundaries.
+- Sensitive to severe multicollinearity.
+- Can be affected by outliers and influential observations.
+- Performance may decrease when classes are highly imbalanced.
+- Requires appropriate feature representation and preprocessing.
+- Assumes linearity between predictors and log-odds for standard logistic regression.
+
+## 11. Linear Regression vs Logistic Regression
+
+| Feature | Linear Regression | Logistic Regression |
+|---|---|---|
+| Problem Type | Regression | Classification |
+| Output | Continuous value | Class probability |
+| Function | Linear function | Sigmoid / Softmax |
+| Prediction | Numerical value | Class label |
+| Common Loss | MSE | Cross-Entropy |
+| Evaluation | MAE, MSE, RMSE, R² | Accuracy, Precision, Recall, F1 |
+| Example | House price prediction | Spam detection |
+
+## 12. Interview Questions
+
+1. What is Logistic Regression?
+2. Why is Logistic Regression used for classification?
+3. What is the difference between Linear and Logistic Regression?
+4. Explain the Sigmoid Function.
+5. Why does the Sigmoid Function produce values between 0 and 1?
+6. What is a classification threshold?
+7. What is Binary Cross-Entropy Loss?
+8. What is the difference between Precision and Recall?
+9. What is a Confusion Matrix?
+10. What is the ROC-AUC score?
+11. What is Multinomial Logistic Regression?
+12. What is the difference between Binary and Multiclass Classification?
+13. Why is Logistic Regression sensitive to multicollinearity?
+14. How do you handle imbalanced datasets?
+15. Can Logistic Regression be used for multiclass classification?
+
+## 13. Practical Implementation Using Python
+
+**Libraries:**
+
+- NumPy – Numerical operations.
+- Pandas – Data manipulation.
+- Matplotlib – Data visualization.
+- Seaborn – Statistical visualization.
+- Scikit-learn – Machine learning implementation.
+
+**Example: Binary Classification using Scikit-learn**
+
+```python
+import numpy as np
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    confusion_matrix,
+    classification_report
+)
+
+# Load dataset
+data = load_breast_cancer()
+
+X = data.data
+y = data.target
+
+# Split dataset
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.2,
+    random_state=42,
+    stratify=y
+)
+
+# Feature scaling
+scaler = StandardScaler()
+
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# Initialize model
+model = LogisticRegression(max_iter=1000)
+
+# Train model
+model.fit(X_train, y_train)
+
+# Make predictions
+y_pred = model.predict(X_test)
+
+# Evaluate model
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print("Precision:", precision_score(y_test, y_pred))
+print("Recall:", recall_score(y_test, y_pred))
+print("F1 Score:", f1_score(y_test, y_pred))
+
+print("\nConfusion Matrix:")
+print(confusion_matrix(y_test, y_pred))
+
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred))
+```
+
+**Note:** Scikit-learn's breast cancer dataset uses 0 for malignant and 1 for benign. The code above uses the default positive class of 1.
+
+## Key Takeaway
+
+Logistic Regression is a fundamental supervised machine learning algorithm used for classification tasks. Understanding the Sigmoid Function, classification threshold, Binary Cross-Entropy Loss, Gradient Descent, and classification evaluation metrics is essential for building classification models.
+
+## Next Topic
+
+**Day 04 – K-Nearest Neighbors (KNN)**
+
+Topics to cover:
+- Introduction to KNN.
+- How the KNN algorithm works.
+- Distance metrics (Euclidean, Manhattan).
+- Choosing the optimal K value.
+- Feature scaling.
+- Advantages and limitations.
+- Python implementation using Scikit-learn.
+- Interview questions.
+
+---
+
+**Learning Journey:** Day 03 Completed – Logistic Regression
+
+**Focus:** Understanding classification algorithms, probability estimation, and model evaluation using Python.
