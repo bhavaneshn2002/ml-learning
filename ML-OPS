@@ -582,4 +582,31 @@ Logistic Regression is a fundamental supervised machine learning algorithm used 
 
 **Day 04 – K-Nearest Neighbors (KNN)**
 
+Topics to cover:
+
+Introduction to KNN.
+
+How the KNN algorithm works.
+
+Distance metrics (Euclidean, Manhattan).
+
+Choosing the optimal K value.
+
+Feature scaling.
+
+Advantages and limitations.
+
+Python implementation using Scikit-learn.
+
+Interview questions.
+
+Learning Journey: Day 03 Completed – Logistic Regression
+
+Focus: Understanding classification algorithms, probability estimation, and model evaluation using Python.
+
+
+
+
+
+
 
