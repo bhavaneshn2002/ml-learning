@@ -608,5 +608,421 @@ Focus: Understanding classification algorithms, probability estimation, and mode
 
 
 
+# Day 04 – K-Nearest Neighbors (KNN)
 
+## 1. What is K-Nearest Neighbors (KNN)?
+
+K-Nearest Neighbors (KNN) is a supervised machine learning algorithm used for both classification and regression problems.
+
+It predicts the output of a new data point by identifying the K closest data points (neighbors) in the training dataset.
+
+KNN is also known as a lazy learning algorithm because it does not build an explicit model during training. Instead, it stores the training data and performs calculations when making predictions.
+
+**Examples:**
+- Predicting whether an email is Spam or Not Spam.
+- Classifying fruits based on weight and size.
+- Predicting house prices based on similar properties.
+- Recommending products based on similar user preferences.
+
+## 2. Types of KNN
+
+### A. KNN Classification
+
+Used when the target variable contains categorical values.
+
+The algorithm assigns a class based on the majority class among the K nearest neighbors.
+
+**Example:**
+
+If K = 5 and the nearest neighbors contain:
+- 3 Spam emails.
+- 2 Not Spam emails.
+
+The predicted class is Spam.
+
+### B. KNN Regression
+
+Used when the target variable contains continuous numerical values.
+
+The algorithm predicts the output by calculating the average (or a weighted average) of the target values of the K nearest neighbors.
+
+**Example:**
+
+Predicting a house price using the average prices of similar nearby houses.
+
+## 3. How Does KNN Work?
+
+KNN works by calculating the distance between a new data point and the existing training data points.
+
+**Step-by-step process:**
+
+1. Collect and prepare the dataset.
+2. Choose the value of K.
+3. Calculate the distance between the new data point and all training data points.
+4. Sort the distances in ascending order.
+5. Select the K nearest neighbors.
+6. For classification, use majority voting.
+7. For regression, calculate the average target value.
+8. Return the predicted output.
+
+## 4. Distance Metrics
+
+Distance metrics measure how close two data points are to each other.
+
+### A. Euclidean Distance
+
+Measures the straight-line distance between two points.
+
+**Mathematical Equation:**
+
+\[
+d(x,y)=\sqrt{\sum_{i=1}^{n}(x_i-y_i)^2}
+\]
+
+For two dimensions:
+
+\[
+d=\sqrt{(x_1-y_1)^2+(x_2-y_2)^2}
+\]
+
+**Example:**
+
+Points A = (2, 3) and B = (5, 7).
+
+\[
+d=\sqrt{(5-2)^2+(7-3)^2}
+\]
+
+\[
+d=\sqrt{9+16}=5
+\]
+
+### B. Manhattan Distance
+
+Measures the sum of absolute differences between coordinates.
+
+**Mathematical Equation:**
+
+\[
+d(x,y)=\sum_{i=1}^{n}|x_i-y_i|
+\]
+
+**Example:**
+
+For A = (2, 3) and B = (5, 7):
+
+\[
+d=|5-2|+|7-3|=7
+\]
+
+### C. Minkowski Distance
+
+A generalized distance metric that includes Euclidean and Manhattan distances.
+
+**Mathematical Equation:**
+
+\[
+d(x,y)=\left(\sum_{i=1}^{n}|x_i-y_i|^p\right)^{1/p}
+\]
+
+Where:
+- p = 1 gives Manhattan distance.
+- p = 2 gives Euclidean distance.
+
+## 5. Choosing the Optimal K Value
+
+The K value represents the number of nearest neighbors considered during prediction.
+
+Choosing the right K value is important for model performance.
+
+**Small K Value:**
+- More sensitive to noise.
+- Can lead to overfitting.
+- Creates more complex decision boundaries.
+
+**Large K Value:**
+- More resistant to individual noisy observations.
+- Can lead to underfitting.
+- May ignore local patterns.
+
+**Common Practice:**
+
+- Start with K = 3 or K = 5.
+- Test multiple K values.
+- Use cross-validation to identify a suitable K.
+- Select the value that provides the best validation performance.
+
+Odd K values are sometimes preferred in binary classification to reduce voting ties, but they are not always necessary.
+
+## 6. Feature Scaling in KNN
+
+Feature scaling is an important preprocessing step for KNN because the algorithm relies on distance calculations.
+
+If features have different numerical ranges, features with larger values may dominate the distance calculation.
+
+**Example:**
+
+- Age: 18–60
+- Salary: 20,000–150,000
+
+Salary may dominate the distance because of its larger numerical scale.
+
+### Common Scaling Techniques
+
+**A. Standardization (StandardScaler)**
+
+Transforms features to have a mean of approximately 0 and standard deviation of approximately 1.
+
+\[
+z=\frac{x-\mu}{\sigma}
+\]
+
+Where:
+- x = Original value.
+- μ = Mean.
+- σ = Standard deviation.
+
+**B. Normalization (MinMaxScaler)**
+
+Scales feature values to a specified range, commonly 0 to 1.
+
+\[
+X'=\frac{X-X_{min}}{X_{max}-X_{min}}
+\]
+
+## 7. Important Parameters in KNN
+
+| Parameter | Description |
+|---|---|
+| n_neighbors | Number of nearest neighbors (K) |
+| weights | Uniform or distance-based voting |
+| metric | Distance calculation method |
+| algorithm | Neighbor search method |
+| leaf_size | Controls tree-based search performance |
+| p | Power parameter for Minkowski distance |
+
+### Types of Weighting
+
+**Uniform Weighting:**
+All neighbors have equal voting importance.
+
+**Distance Weighting:**
+Closer neighbors receive greater voting importance than farther neighbors.
+
+## 8. Evaluation Metrics
+
+### For Classification
+
+| Metric | Purpose |
+|---|---|
+| Accuracy | Percentage of correct predictions |
+| Precision | Correct positive predictions among predicted positives |
+| Recall | Correct positive predictions among actual positives |
+| F1-Score | Harmonic mean of Precision and Recall |
+| Confusion Matrix | Shows correct and incorrect classifications |
+
+### For Regression
+
+| Metric | Purpose |
+|---|---|
+| MAE | Average absolute prediction error |
+| MSE | Average squared prediction error |
+| RMSE | Square root of MSE |
+| R² Score | Measures explained variance |
+
+## 9. Advantages
+
+- Simple and easy to understand.
+- Easy to implement.
+- Supports classification and regression.
+- No explicit model training phase.
+- Can model complex nonlinear decision boundaries.
+- No strong assumption about the underlying data distribution.
+
+## 10. Limitations
+
+- Prediction can be computationally expensive for large datasets.
+- Requires storing the training dataset.
+- Sensitive to irrelevant features.
+- Sensitive to feature scaling.
+- Can perform poorly with high-dimensional data.
+- Performance depends on the choice of K and distance metric.
+- Sensitive to noisy and imbalanced datasets.
+
+## 11. KNN vs Linear Regression vs Logistic Regression
+
+| Feature | KNN | Linear Regression | Logistic Regression |
+|---|---|---|---|
+| Learning Type | Supervised | Supervised | Supervised |
+| Main Tasks | Classification and Regression | Regression | Classification |
+| Prediction | Nearest neighbors | Continuous value | Class probability |
+| Training | Instance-based | Parameter estimation | Parameter estimation |
+| Distance Metrics | Important | Not required | Not required |
+| Feature Scaling | Very important | Depends on features and optimization | Depends on features and optimization |
+| Common Evaluation | Accuracy, F1, MAE, RMSE | MAE, MSE, R² | Accuracy, Precision, Recall, F1 |
+
+## 12. Interview Questions
+
+1. What is K-Nearest Neighbors?
+2. Why is KNN called a lazy learning algorithm?
+3. What is the difference between KNN Classification and Regression?
+4. How does the KNN algorithm work?
+5. What is the role of K in KNN?
+6. What happens when K is too small?
+7. What happens when K is too large?
+8. Explain Euclidean Distance.
+9. What is Manhattan Distance?
+10. Why is feature scaling important in KNN?
+11. What is the difference between Standardization and Normalization?
+12. What is distance-weighted voting?
+13. What are the advantages and limitations of KNN?
+14. Why does KNN struggle with high-dimensional data?
+15. How can we select the optimal K value?
+
+## 13. Practical Implementation Using Python
+
+**Libraries:**
+
+- NumPy – Numerical operations.
+- Pandas – Data manipulation.
+- Matplotlib – Data visualization.
+- Seaborn – Statistical visualization.
+- Scikit-learn – Machine learning implementation.
+
+### Example: KNN Classification Using Scikit-learn
+
+```python
+import numpy as np
+
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neighbors import KNeighborsClassifier
+
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    confusion_matrix,
+    classification_report
+)
+
+# Load dataset
+data = load_breast_cancer()
+
+X = data.data
+y = data.target
+
+# Split dataset
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    random_state=42,
+    stratify=y
+)
+
+# Feature scaling
+scaler = StandardScaler()
+
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# Initialize KNN model
+knn = KNeighborsClassifier(
+    n_neighbors=5,
+    weights="uniform",
+    metric="minkowski",
+    p=2
+)
+
+# Train model
+knn.fit(X_train, y_train)
+
+# Make predictions
+y_pred = knn.predict(X_test)
+
+# Evaluate model
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print("Precision:", precision_score(y_test, y_pred))
+print("Recall:", recall_score(y_test, y_pred))
+print("F1 Score:", f1_score(y_test, y_pred))
+
+print("\nConfusion Matrix:")
+print(confusion_matrix(y_test, y_pred))
+
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred))
+```
+
+**Note:** This example uses the Breast Cancer Wisconsin dataset available directly through Scikit-learn. StandardScaler is fitted only on training data to prevent data leakage.
+
+## 14. Finding the Optimal K Value
+
+We can compare different K values using a validation dataset.
+
+```python
+import matplotlib.pyplot as plt
+
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+
+k_values = range(1, 21)
+accuracies = []
+
+for k in k_values:
+
+    model = KNeighborsClassifier(n_neighbors=k)
+
+    model.fit(X_train, y_train)
+
+    predictions = model.predict(X_test)
+
+    accuracy = accuracy_score(y_test, predictions)
+
+    accuracies.append(accuracy)
+
+# Visualize results
+plt.figure(figsize=(10, 5))
+
+plt.plot(k_values, accuracies, marker="o")
+
+plt.xlabel("Number of Neighbors (K)")
+plt.ylabel("Accuracy")
+plt.title("KNN: Finding the Optimal K Value")
+
+plt.xticks(k_values)
+plt.grid(True)
+
+plt.show()
+```
+
+**Note:** This example compares test accuracy for learning purposes. In a proper model-selection workflow, choose K using cross-validation on the training data and evaluate the final model on the test set only once.
+
+## Key Takeaway
+
+K-Nearest Neighbors is a fundamental supervised machine learning algorithm used for both classification and regression. Understanding distance metrics, choosing the optimal K value, feature scaling, and neighbor-based predictions is essential for building effective KNN models.
+
+## Next Topic
+
+**Day 05 – Decision Trees**
+
+Topics to cover:
+- Introduction to Decision Trees.
+- How Decision Trees work.
+- Root Nodes, Decision Nodes and Leaf Nodes.
+- Gini Impurity.
+- Entropy and Information Gain.
+- Splitting criteria.
+- Overfitting and pruning.
+- Advantages and limitations.
+- Python implementation using Scikit-learn.
+- Interview questions.
+
+---
+
+**Learning Journey:** Day 04 – K-Nearest Neighbors (KNN)
+
+**Focus:** Understanding distance-based learning, classification, regression, and practical implementation using Python.
 
