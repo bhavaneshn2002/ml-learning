@@ -1026,3 +1026,524 @@ Topics to cover:
 
 **Focus:** Understanding distance-based learning, classification, regression, and practical implementation using Python.
 
+
+
+# Day 05 – Decision Trees
+
+## 1. What is a Decision Tree?
+
+A Decision Tree is a supervised machine learning algorithm used for both classification and regression problems.
+
+It makes predictions by learning a series of decision rules from the training data. These rules are represented in a tree-like structure, where each internal node represents a decision, each branch represents an outcome, and each leaf node represents a final prediction.
+
+Decision Trees work by repeatedly splitting the dataset into smaller subsets based on the most useful features.
+
+**Examples:**
+- Predicting whether a customer will purchase a product.
+- Predicting whether a loan application should be approved.
+- Detecting fraudulent transactions.
+- Predicting house prices.
+- Classifying whether a patient has a particular disease.
+
+## 2. Types of Decision Trees
+
+### A. Classification Tree
+
+Used when the target variable contains categorical values.
+
+It predicts a class based on the majority class or class probabilities in the final leaf node.
+
+**Example:**
+
+Predicting whether a customer will purchase a product:
+- Yes
+- No
+
+Applications:
+- Spam detection.
+- Fraud detection.
+- Customer churn prediction.
+
+### B. Regression Tree
+
+Used when the target variable contains continuous numerical values.
+
+It predicts a numerical output, commonly using the average target value of the training observations in a leaf node.
+
+**Example:**
+
+Predicting house prices based on:
+- Area.
+- Number of bedrooms.
+- Property age.
+- Location-related features.
+
+## 3. Structure of a Decision Tree
+
+A Decision Tree consists of three important components.
+
+### A. Root Node
+
+The topmost node of the tree.
+
+It represents the entire training dataset and the first splitting decision.
+
+### B. Decision Node (Internal Node)
+
+A node that represents a condition or decision based on a feature.
+
+It splits the data into smaller subsets.
+
+### C. Leaf Node (Terminal Node)
+
+The final node of the tree.
+
+It represents the predicted class or numerical value.
+
+**Example:**
+
+A simple loan approval decision:
+
+```text
+          Credit Score
+                |
+       Is score >= 700?
+          /          \
+        Yes           No
+         |             |
+      Income       Loan Rejected
+         |
+   Is income >= 30000?
+       /       \
+     Yes        No
+      |          |
+   Approved   Rejected
+```
+
+## 4. How Does a Decision Tree Work?
+
+Decision Trees work by selecting the best feature and splitting the dataset into smaller subsets.
+
+**Step-by-step process:**
+
+1. Collect and prepare the dataset.
+2. Identify input features and target variable.
+3. Start with the complete training dataset at the root node.
+4. Evaluate possible feature splits.
+5. Select the best split using a splitting criterion.
+6. Divide the dataset into smaller subsets.
+7. Repeat the splitting process recursively.
+8. Stop when a stopping condition is reached.
+9. Assign predictions to the leaf nodes.
+10. Evaluate the model using test data.
+
+## 5. Splitting Criteria
+
+Splitting criteria help the algorithm identify the best feature and threshold for dividing the dataset.
+
+The objective is to create child nodes that are more homogeneous than their parent node.
+
+### A. Gini Impurity
+
+Gini Impurity measures how often a randomly selected observation would be incorrectly classified if it were labelled according to the class distribution of the node.
+
+**Mathematical Equation:**
+
+\[
+Gini = 1-\sum_{i=1}^{C}p_i^2
+\]
+
+Where:
+- C = Number of classes.
+- pᵢ = Proportion of observations belonging to class i.
+
+**Example:**
+
+Suppose a node contains:
+- 6 Yes observations.
+- 4 No observations.
+
+\[
+Gini=1-(0.6^2+0.4^2)
+\]
+
+\[
+Gini=1-(0.36+0.16)
+\]
+
+\[
+Gini=0.48
+\]
+
+A Gini Impurity of 0 indicates a pure node containing only one class.
+
+### B. Entropy
+
+Entropy measures the uncertainty or impurity in a dataset.
+
+**Mathematical Equation:**
+
+\[
+Entropy=-\sum_{i=1}^{C}p_i\log_2(p_i)
+\]
+
+Where:
+- C = Number of classes.
+- pᵢ = Proportion of observations belonging to class i.
+
+**Example:**
+
+For a dataset containing:
+- 6 Yes observations.
+- 4 No observations.
+
+\[
+Entropy=-[0.6\log_2(0.6)+0.4\log_2(0.4)]
+\]
+
+\[
+Entropy\approx0.971
+\]
+
+Entropy is 0 when a node contains only one class.
+
+### C. Information Gain
+
+Information Gain measures how much uncertainty is reduced after splitting a dataset.
+
+It is calculated as the difference between the entropy of the parent node and the weighted entropy of the child nodes.
+
+**Mathematical Equation:**
+
+\[
+IG=Entropy(parent)-WeightedEntropy(children)
+\]
+
+The algorithm generally prefers the split that provides the highest Information Gain.
+
+### D. Variance Reduction
+
+Used in regression trees to select splits that reduce the variation of target values within child nodes.
+
+The algorithm chooses splits that minimize the weighted variance or squared error of the resulting child nodes.
+
+## 6. Important Decision Tree Parameters
+
+| Parameter | Description |
+|---|---|
+| criterion | Splitting criterion such as Gini or Entropy |
+| max_depth | Maximum depth of the tree |
+| min_samples_split | Minimum samples required to split an internal node |
+| min_samples_leaf | Minimum samples required in a leaf node |
+| max_features | Number of features considered for splitting |
+| max_leaf_nodes | Maximum number of leaf nodes |
+| random_state | Controls reproducibility |
+
+## 7. Overfitting and Underfitting
+
+### A. Overfitting
+
+Overfitting happens when a Decision Tree learns the training data too closely, including noise and unnecessary patterns.
+
+**Characteristics:**
+- Very high training accuracy.
+- Poor performance on unseen data.
+- Tree becomes unnecessarily complex.
+
+**Solutions:**
+- Limit maximum tree depth.
+- Increase minimum samples per leaf.
+- Increase minimum samples required for splitting.
+- Apply pruning.
+- Use cross-validation.
+
+### B. Underfitting
+
+Underfitting happens when a Decision Tree is too simple to capture important patterns in the dataset.
+
+**Characteristics:**
+- Poor training performance.
+- Poor testing performance.
+- Tree does not capture sufficient relationships.
+
+**Solutions:**
+- Increase maximum tree depth.
+- Reduce overly restrictive splitting constraints.
+- Allow more meaningful splits.
+- Improve feature selection.
+
+## 8. Pruning in Decision Trees
+
+Pruning is a technique used to reduce the complexity of a Decision Tree by removing unnecessary branches.
+
+It helps reduce overfitting and improve generalization.
+
+### A. Pre-Pruning
+
+Pre-pruning stops the tree from growing too much during training.
+
+Common parameters:
+- max_depth.
+- min_samples_split.
+- min_samples_leaf.
+- max_leaf_nodes.
+
+### B. Post-Pruning
+
+Post-pruning first allows the tree to grow and then removes branches that do not provide sufficient improvement.
+
+In Scikit-learn, Cost Complexity Pruning is supported through the `ccp_alpha` parameter.
+
+A larger `ccp_alpha` generally results in a smaller tree.
+
+## 9. Important Assumptions and Characteristics
+
+Decision Trees have relatively few assumptions about the underlying data distribution.
+
+Important characteristics include:
+
+- Suitable for classification and regression tasks.
+- Can capture nonlinear relationships.
+- Can model feature interactions.
+- Do not require feature standardization or normalization in most cases.
+- Can work with numerical and categorical features when they are appropriately represented.
+- Can be sensitive to small changes in training data.
+- Large trees can overfit the training dataset.
+
+## 10. Evaluation Metrics
+
+### For Classification
+
+| Metric | Purpose |
+|---|---|
+| Accuracy | Percentage of correctly classified observations |
+| Precision | Correct positive predictions among predicted positives |
+| Recall | Correct positive predictions among actual positives |
+| F1-Score | Harmonic mean of Precision and Recall |
+| Confusion Matrix | Summarizes correct and incorrect predictions |
+| ROC-AUC | Measures the ability to distinguish between classes |
+
+### For Regression
+
+| Metric | Purpose |
+|---|---|
+| MAE | Average absolute prediction error |
+| MSE | Average squared prediction error |
+| RMSE | Square root of MSE |
+| R² Score | Measures explained variance |
+
+## 11. Advantages
+
+- Easy to understand and interpret.
+- Supports classification and regression.
+- Can capture nonlinear relationships.
+- Does not require feature scaling.
+- Can model feature interactions.
+- Requires relatively little data preprocessing.
+- Can provide feature importance estimates.
+
+## 12. Limitations
+
+- Can easily overfit without proper constraints.
+- Sensitive to small changes in training data.
+- Greedy splitting may not produce a globally optimal tree.
+- Individual trees can have unstable predictions.
+- Can be biased toward features with many possible split points.
+- A single Decision Tree may perform worse than ensemble methods such as Random Forest.
+
+## 13. Decision Tree vs Other Algorithms
+
+| Feature | Decision Tree | KNN | Linear Regression |
+|---|---|---|---|
+| Learning Type | Supervised | Supervised | Supervised |
+| Main Tasks | Classification and Regression | Classification and Regression | Regression |
+| Model Structure | Tree-based | Instance-based | Linear equation |
+| Feature Scaling | Usually not required | Important | Depends on model and optimization |
+| Nonlinear Relationships | Yes | Yes | Not naturally |
+| Interpretability | High for small trees | Low to moderate | High |
+| Main Challenge | Overfitting | Computational cost | Nonlinear patterns |
+
+## 14. Practical Implementation Using Python
+
+**Libraries:**
+
+- NumPy – Numerical operations.
+- Pandas – Data manipulation.
+- Matplotlib – Data visualization.
+- Seaborn – Statistical visualization.
+- Scikit-learn – Machine learning implementation.
+
+### Example: Decision Tree Classification Using Scikit-learn
+
+```python
+import numpy as np
+
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    confusion_matrix,
+    classification_report
+)
+
+import matplotlib.pyplot as plt
+
+# Load dataset
+data = load_breast_cancer()
+
+X = data.data
+y = data.target
+
+# Split dataset
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    random_state=42,
+    stratify=y
+)
+
+# Initialize Decision Tree
+model = DecisionTreeClassifier(
+    criterion="gini",
+    max_depth=4,
+    min_samples_split=5,
+    min_samples_leaf=2,
+    random_state=42
+)
+
+# Train model
+model.fit(X_train, y_train)
+
+# Make predictions
+y_pred = model.predict(X_test)
+
+# Evaluate model
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print("Precision:", precision_score(y_test, y_pred))
+print("Recall:", recall_score(y_test, y_pred))
+print("F1 Score:", f1_score(y_test, y_pred))
+
+print("\nConfusion Matrix:")
+print(confusion_matrix(y_test, y_pred))
+
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred))
+
+# Visualize Decision Tree
+plt.figure(figsize=(20, 10))
+
+plot_tree(
+    model,
+    feature_names=data.feature_names,
+    class_names=data.target_names,
+    filled=True,
+    rounded=True,
+    fontsize=8
+)
+
+plt.title("Decision Tree Classification")
+plt.show()
+```
+
+**Note:** The Breast Cancer Wisconsin dataset is available directly through Scikit-learn. Its target classes are malignant and benign.
+
+## 15. Feature Importance
+
+Decision Trees can estimate how much each feature contributes to reducing impurity across the tree.
+
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Extract feature importance
+importance = model.feature_importances_
+
+# Create DataFrame
+feature_importance = pd.DataFrame({
+    "Feature": data.feature_names,
+    "Importance": importance
+})
+
+# Sort features
+feature_importance = feature_importance.sort_values(
+    by="Importance",
+    ascending=False
+)
+
+print(feature_importance.head(10))
+
+# Visualize top 10 features
+plt.figure(figsize=(10, 6))
+
+plt.barh(
+    feature_importance["Feature"].head(10),
+    feature_importance["Importance"].head(10)
+)
+
+plt.xlabel("Feature Importance")
+plt.ylabel("Features")
+plt.title("Top 10 Important Features")
+
+plt.gca().invert_yaxis()
+plt.tight_layout()
+plt.show()
+```
+
+**Note:** Feature importance represents the model's use of features, not necessarily a causal relationship with the target.
+
+## 16. Interview Questions
+
+1. What is a Decision Tree?
+2. What is the difference between Classification and Regression Trees?
+3. Explain Root Node, Decision Node, and Leaf Node.
+4. How does a Decision Tree select the best feature?
+5. What is Gini Impurity?
+6. What is Entropy?
+7. What is Information Gain?
+8. What is the difference between Gini Impurity and Entropy?
+9. What is Variance Reduction?
+10. What is Overfitting in Decision Trees?
+11. What is Underfitting?
+12. Explain Pre-Pruning and Post-Pruning.
+13. What is Cost Complexity Pruning?
+14. What is the purpose of max_depth?
+15. Why do Decision Trees not usually require feature scaling?
+16. How do Decision Trees handle nonlinear relationships?
+17. What is Feature Importance?
+18. What are the limitations of Decision Trees?
+19. What is the difference between a Decision Tree and Random Forest?
+20. Why are Decision Trees sensitive to small changes in training data?
+
+## Key Takeaway
+
+Decision Trees are fundamental supervised machine learning algorithms used for both classification and regression. Understanding tree structure, Gini Impurity, Entropy, Information Gain, splitting criteria, overfitting, and pruning is essential for building effective Decision Tree models.
+
+## Next Topic
+
+**Day 06 – Random Forest**
+
+Topics to cover:
+- Introduction to Random Forest.
+- Ensemble Learning.
+- Bagging (Bootstrap Aggregating).
+- Bootstrap Sampling.
+- Random Feature Selection.
+- How Random Forest works.
+- Feature Importance.
+- Out-of-Bag (OOB) Evaluation.
+- Advantages and limitations.
+- Python implementation using Scikit-learn.
+- Interview questions.
+
+---
+
+**Learning Journey:** Day 05 – Decision Trees
+
+**Focus:** Understanding tree-based learning, splitting criteria, impurity measures, pruning, and practical implementation using Python.
+
