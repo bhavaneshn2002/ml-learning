@@ -1529,4 +1529,28 @@ Decision Trees are fundamental supervised machine learning algorithms used for b
 **Day 06 – Random Forest**
 
 
+Introduction to Random Forest.
 
+Ensemble Learning.
+
+Bagging (Bootstrap Aggregating).
+
+Bootstrap Sampling.
+
+Random Feature Selection.
+
+How Random Forest works.
+
+Feature Importance.
+
+Out-of-Bag (OOB) Evaluation.
+
+Advantages and limitations.
+
+Python implementation using Scikit-learn.
+
+Interview questions.
+
+Learning Journey: Day 05 – Decision Trees
+
+Focus: Understanding tree-based learning, splitting criteria, impurity measures, pruning, and practical implementation using Python.
