@@ -1520,36 +1520,7 @@ plt.show()
 19. What is the difference between a Decision Tree and Random Forest?
 20. Why are Decision Trees sensitive to small changes in training data?
 
-## Key Takeaway
 
-Decision Trees are fundamental supervised machine learning algorithms used for both classification and regression. Understanding tree structure, Gini Impurity, Entropy, Information Gain, splitting criteria, overfitting, and pruning is essential for building effective Decision Tree models.
-
-## Next Topic
-
-**Day 06 – Random Forest**
-
-
-Introduction to Random Forest.
-
-Ensemble Learning.
-
-Bagging (Bootstrap Aggregating).
-
-Bootstrap Sampling.
-
-Random Feature Selection.
-
-How Random Forest works.
-
-Feature Importance.
-
-Out-of-Bag (OOB) Evaluation.
-
-Advantages and limitations.
-
-Python implementation using Scikit-learn.
-
-Interview questions.
 
 Learning Journey: Day 05 – Decision Trees
 
