@@ -2434,4 +2434,111 @@ model = make_pipeline(
 )
 
 # Train model
-model.fit
+model.fit(X_train, y_train)
+
+# Make predictions
+y_pred = model.predict(X_test)
+
+# Get decision scores for ROC-AUC
+y_scores = model.decision_function(X_test)
+
+# Evaluate model
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print("Precision:", precision_score(y_test, y_pred))
+print("Recall:", recall_score(y_test, y_pred))
+print("F1 Score:", f1_score(y_test, y_pred))
+print("ROC-AUC:", roc_auc_score(y_test, y_scores))
+
+print("\nConfusion Matrix:")
+print(confusion_matrix(y_test, y_pred))
+
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred))
+```
+
+**Note:** The Breast Cancer Wisconsin dataset is available directly through Scikit-learn. StandardScaler is fitted only on the training data through the Pipeline, preventing data leakage.
+
+## 16. Comparing Different SVM Kernels
+
+```python
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
+
+kernels = ["linear", "poly", "rbf", "sigmoid"]
+
+for kernel in kernels:
+
+    model = make_pipeline(
+        StandardScaler(),
+        SVC(
+            kernel=kernel,
+            C=1.0,
+            gamma="scale"
+        )
+    )
+
+    model.fit(X_train, y_train)
+
+    predictions = model.predict(X_test)
+
+    accuracy = accuracy_score(y_test, predictions)
+
+    print(f"{kernel} Kernel Accuracy: {accuracy:.4f}")
+```
+
+**Note:** These are test-set comparisons for learning purposes. For reliable model selection, tune kernel and hyperparameters using cross-validation on training data and evaluate the selected model on the test set.
+
+## 17. Interview Questions
+
+1. What is Support Vector Machine?
+2. What is a Hyperplane?
+3. What are Support Vectors?
+4. What is the Maximum Margin Classifier?
+5. What is the difference between Linear and Nonlinear SVM?
+6. What is the Kernel Trick?
+7. Explain the different types of Kernel Functions.
+8. What is the role of the C parameter?
+9. What is the role of Gamma?
+10. Why is feature scaling important in SVM?
+11. What is the difference between SVC and SVR?
+12. What is the difference between Hard Margin and Soft Margin SVM?
+13. How does SVM handle nonlinear data?
+14. What happens when C is too large?
+15. What happens when Gamma is too large?
+16. What are the advantages of SVM?
+17. What are the limitations of SVM?
+18. Can SVM be used for multiclass classification?
+19. Why is SVM effective in high-dimensional spaces?
+20. How can we optimize SVM hyperparameters?
+
+## Key Takeaway
+
+Support Vector Machines are powerful supervised machine learning algorithms that identify optimal decision boundaries by maximizing the margin between classes.
+
+Understanding Hyperplanes, Support Vectors, Maximum Margin, Kernel Functions, C, Gamma, and Feature Scaling is essential for building effective SVM models.
+
+## Next Topic
+
+**Day 08 – Naive Bayes**
+
+Topics to cover:
+- Introduction to Naive Bayes.
+- Bayes' Theorem.
+- Conditional Probability.
+- Prior and Posterior Probability.
+- Likelihood.
+- Naive Independence Assumption.
+- Gaussian Naive Bayes.
+- Multinomial Naive Bayes.
+- Bernoulli Naive Bayes.
+- Advantages and Limitations.
+- Python Implementation using Scikit-learn.
+- Interview Questions.
+
+---
+
+**Learning Journey:** Day 07 – Support Vector Machines
+
+**Focus:** Understanding Hyperplanes, Support Vectors, Kernel Functions, Maximum Margin Classification, and practical implementation using Python.
