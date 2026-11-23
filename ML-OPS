@@ -2037,3 +2037,401 @@ Topics to cover:
 **Learning Journey:** Day 06 – Random Forest
 
 **Focus:**  Understanding Ensemble Learning, Bootstrap Sampling, Bagging, Feature Importance, and practical implementation using Python.
+
+
+
+
+
+# Day 07 – Support Vector Machines (SVM)
+
+## 1. What is Support Vector Machine (SVM)?
+
+Support Vector Machine (SVM) is a supervised machine learning algorithm primarily used for classification problems. It can also be used for regression.
+
+SVM works by finding an optimal decision boundary, called a hyperplane, that separates different classes of data points while maximizing the margin between them.
+
+The data points closest to the decision boundary are called Support Vectors.
+
+**Examples:**
+- Email Spam Detection.
+- Image Classification.
+- Face Recognition.
+- Medical Diagnosis.
+- Text Classification.
+- Fraud Detection.
+
+## 2. Types of Support Vector Machines
+
+### A. Support Vector Classification (SVC)
+
+SVC is used for classification problems.
+
+It identifies an optimal hyperplane that separates different classes.
+
+**Example:**
+- Classifying emails as Spam or Not Spam.
+- Classifying tumors as Benign or Malignant.
+
+### B. Support Vector Regression (SVR)
+
+SVR is used for regression problems.
+
+Instead of minimizing every prediction error, SVR tries to fit a function within a specified error margin called Epsilon (ε).
+
+**Example:**
+- Predicting house prices.
+- Predicting stock-related numerical indicators.
+- Forecasting sales.
+
+## 3. How Does SVM Work?
+
+SVM identifies the best possible hyperplane that separates different classes.
+
+**Step-by-step process:**
+
+1. Collect and prepare the dataset.
+2. Identify input features and target variable.
+3. Transform or scale the features when necessary.
+4. Identify possible separating hyperplanes.
+5. Find the Support Vectors closest to the decision boundary.
+6. Calculate the margin between the classes.
+7. Select the hyperplane that maximizes the margin.
+8. Use the trained model to classify new observations.
+9. Evaluate model performance using test data.
+
+## 4. Hyperplane
+
+A Hyperplane is a decision boundary that separates data points belonging to different classes.
+
+For two-dimensional data, the hyperplane is a line.
+
+For three-dimensional data, it is a plane.
+
+For higher-dimensional data, it is called a hyperplane.
+
+**Mathematical Equation:**
+
+\[
+w^Tx+b=0
+\]
+
+Where:
+
+- w = Weight vector.
+- x = Input feature vector.
+- b = Bias or intercept.
+
+The prediction depends on which side of the hyperplane the observation falls.
+
+\[
+f(x)=w^Tx+b
+\]
+
+- If f(x) > 0, predict the positive class.
+- If f(x) < 0, predict the negative class.
+
+## 5. Support Vectors
+
+Support Vectors are the data points closest to the decision boundary.
+
+They are extremely important because they determine the position and orientation of the optimal hyperplane.
+
+**Important Points:**
+
+- Support Vectors define the margin.
+- They influence the position of the decision boundary.
+- Removing or changing a Support Vector can change the model.
+- Data points far from the boundary generally have less direct influence on the fitted SVM.
+
+## 6. Maximum Margin Classifier
+
+SVM attempts to maximize the distance between the decision boundary and the closest data points from each class.
+
+This distance is called the Margin.
+
+A larger margin can improve generalization when the data is appropriately separated.
+
+**Margin Width:**
+
+\[
+Margin=\frac{2}{||w||}
+\]
+
+Where:
+
+- w = Weight vector.
+- ||w|| = Euclidean norm of the weight vector.
+
+The optimization objective for a hard-margin SVM is:
+
+\[
+\min \frac{1}{2}||w||^2
+\]
+
+Subject to:
+
+\[
+y_i(w^Tx_i+b)\geq1
+\]
+
+Where:
+
+- xᵢ = Input data point.
+- yᵢ = Class label (-1 or +1).
+- w = Weight vector.
+- b = Bias.
+
+## 7. Types of SVM
+
+### A. Linear SVM
+
+Used when data can be separated reasonably well using a linear decision boundary.
+
+**Example:**
+
+Separating two classes using a straight line.
+
+### B. Nonlinear SVM
+
+Used when data cannot be separated effectively using a straight line.
+
+It uses Kernel Functions to transform or implicitly represent data in a higher-dimensional feature space.
+
+This helps SVM identify nonlinear decision boundaries.
+
+## 8. Kernel Trick
+
+The Kernel Trick allows SVM to learn nonlinear decision boundaries without explicitly calculating the transformed coordinates in a higher-dimensional space.
+
+It calculates similarities between observations using a kernel function.
+
+### Common Types of Kernel Functions
+
+**A. Linear Kernel**
+
+Used when the relationship between classes can be represented using a linear decision boundary.
+
+\[
+K(x,y)=x^Ty
+\]
+
+**B. Polynomial Kernel**
+
+Allows the model to learn more complex relationships using polynomial combinations of features.
+
+\[
+K(x,y)=(\gamma x^Ty+r)^d
+\]
+
+Where:
+
+- γ = Kernel coefficient.
+- r = Constant term.
+- d = Polynomial degree.
+
+**C. Radial Basis Function (RBF) Kernel**
+
+A popular kernel used to model nonlinear relationships.
+
+\[
+K(x,y)=e^{-\gamma||x-y||^2}
+\]
+
+Where:
+
+- γ = Controls how far the influence of a training observation extends.
+- ||x-y|| = Distance between two observations.
+
+**D. Sigmoid Kernel**
+
+Uses a hyperbolic tangent function.
+
+\[
+K(x,y)=\tanh(\gamma x^Ty+r)
+\]
+
+## 9. Important SVM Parameters
+
+| Parameter | Description |
+|---|---|
+| C | Controls the trade-off between margin width and classification errors |
+| kernel | Specifies the kernel function |
+| gamma | Controls the influence range of individual training observations for RBF and other applicable kernels |
+| degree | Degree of the polynomial kernel |
+| coef0 | Independent term in polynomial and sigmoid kernels |
+| probability | Enables probability estimation for SVC |
+| epsilon | Defines the error tolerance in SVR |
+| class_weight | Adjusts class importance during classification |
+
+### Understanding C Parameter
+
+C controls the penalty for classification errors.
+
+**Small C:**
+- Allows more classification errors.
+- Encourages a wider margin.
+- Applies stronger regularization.
+- May lead to underfitting.
+
+**Large C:**
+- Penalizes classification errors more heavily.
+- Encourages fewer training errors.
+- Can produce a narrower margin.
+- May increase overfitting risk.
+
+### Understanding Gamma Parameter
+
+Gamma determines how far the influence of a single training observation reaches in an RBF kernel.
+
+**Small Gamma:**
+- Each observation has a wider influence.
+- Decision boundaries tend to be smoother.
+- May lead to underfitting.
+
+**Large Gamma:**
+- Each observation has a more localized influence.
+- Decision boundaries can become more complex.
+- May lead to overfitting.
+
+## 10. Feature Scaling in SVM
+
+Feature scaling is generally very important in SVM because its optimization and distance calculations can be affected by differences in feature magnitudes.
+
+**Example:**
+
+- Age: 18–60.
+- Salary: 20,000–150,000.
+
+Salary may dominate calculations if features are not scaled appropriately.
+
+### Common Scaling Techniques
+
+**A. Standardization**
+
+\[
+z=\frac{x-\mu}{\sigma}
+\]
+
+Transforms features to have approximately zero mean and unit variance.
+
+**B. Normalization**
+
+\[
+X'=\frac{X-X_{min}}{X_{max}-X_{min}}
+\]
+
+Transforms values into a specified range, commonly 0 to 1.
+
+StandardScaler is a common choice for SVM.
+
+## 11. Evaluation Metrics
+
+### For Classification
+
+| Metric | Purpose |
+|---|---|
+| Accuracy | Percentage of correct predictions |
+| Precision | Correct positive predictions among predicted positives |
+| Recall | Correct positive predictions among actual positives |
+| F1-Score | Harmonic mean of Precision and Recall |
+| Confusion Matrix | Summarizes classification results |
+| ROC-AUC | Measures the model's ability to distinguish between classes |
+
+### For Regression (SVR)
+
+| Metric | Purpose |
+|---|---|
+| MAE | Average absolute prediction error |
+| MSE | Average squared prediction error |
+| RMSE | Square root of MSE |
+| R² Score | Measures explained variance |
+
+## 12. Advantages
+
+- Effective in high-dimensional feature spaces.
+- Can handle linear and nonlinear classification problems.
+- Uses the Kernel Trick to model complex boundaries.
+- Works well when there is a clear margin of separation.
+- Uses only Support Vectors to define the decision boundary.
+- Supports both classification and regression.
+
+## 13. Limitations
+
+- Training can be computationally expensive for large datasets.
+- Sensitive to feature scaling.
+- Choosing the right kernel and hyperparameters can be difficult.
+- Less interpretable than simple linear models.
+- Can perform poorly when classes overlap significantly.
+- Probability estimates require additional computation.
+- Performance may decrease with noisy datasets and inappropriate kernel choices.
+
+## 14. SVM vs Other Algorithms
+
+| Feature | SVM | Decision Tree | Random Forest |
+|---|---|---|---|
+| Learning Type | Supervised | Supervised | Supervised |
+| Main Tasks | Classification and Regression | Classification and Regression | Classification and Regression |
+| Model Structure | Hyperplane | Tree structure | Multiple trees |
+| Nonlinear Support | Kernel Trick | Yes | Yes |
+| Feature Scaling | Important | Usually unnecessary | Usually unnecessary |
+| Interpretability | Moderate to low | High for small trees | Lower |
+| Main Challenge | Kernel and parameter selection | Overfitting | Computational cost |
+
+## 15. Practical Implementation Using Python
+
+**Libraries:**
+
+- NumPy – Numerical operations.
+- Pandas – Data manipulation.
+- Matplotlib – Data visualization.
+- Seaborn – Statistical visualization.
+- Scikit-learn – Machine learning implementation.
+
+### Example: SVM Classification Using Scikit-learn
+
+```python
+import numpy as np
+
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+from sklearn.svm import SVC
+
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    confusion_matrix,
+    classification_report,
+    roc_auc_score
+)
+
+# Load dataset
+data = load_breast_cancer()
+
+X = data.data
+y = data.target
+
+# Split dataset
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    random_state=42,
+    stratify=y
+)
+
+# Create pipeline with scaling and SVM
+model = make_pipeline(
+    StandardScaler(),
+    SVC(
+        kernel="rbf",
+        C=1.0,
+        gamma="scale"
+    )
+)
+
+# Train model
+model.fit
