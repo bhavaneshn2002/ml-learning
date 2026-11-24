@@ -2544,3 +2544,599 @@ Topics to cover:
 Learning Journey: Day 07 – Support Vector Machines
 
 Focus: Understanding Hyperplanes, Support Vectors, Kernel Functions, Maximum Margin Classification, and practical implementation using Python.
+
+
+
+
+
+# Day 08 – Naive Bayes Algorithm
+
+## 1. Introduction to Naive Bayes
+
+Naive Bayes is a supervised machine learning algorithm primarily used for classification problems.
+
+It is based on **Bayes' Theorem**, which calculates the probability of an event based on previously observed information.
+
+It is called "Naive" because it assumes that all input features are conditionally independent of each other, given the target class.
+
+### Real-world applications
+
+- Email spam detection
+- Sentiment analysis
+- News categorization
+- Document classification
+- Medical diagnosis
+- Recommendation systems
+
+### Example
+
+Suppose we receive an email:
+
+"Congratulations! You have won a free prize."
+
+A Naive Bayes classifier can estimate whether the email is:
+
+- Spam
+- Not Spam
+
+It uses the probabilities of words appearing in spam and non-spam emails to make its prediction.
+
+---
+
+## 2. Bayes' Theorem
+
+Bayes' Theorem is the mathematical foundation of Naive Bayes.
+
+\[
+P(A|B)=\frac{P(B|A)\times P(A)}{P(B)}
+\]
+
+Where:
+
+- \(P(A|B)\): Posterior probability
+- \(P(B|A)\): Likelihood
+- \(P(A)\): Prior probability
+- \(P(B)\): Evidence
+
+### Example
+
+Suppose:
+
+- 40% of emails are spam.
+- The word "offer" appears in 70% of spam emails.
+- The word "offer" appears in 10% of non-spam emails.
+
+We want to calculate the probability that an email is spam given that it contains the word "offer".
+
+\[
+P(Spam)=0.4
+\]
+
+\[
+P(Offer|Spam)=0.7
+\]
+
+\[
+P(Offer|NotSpam)=0.1
+\]
+
+Using Bayes' Theorem:
+
+\[
+P(Spam|Offer)=
+\frac{0.7\times0.4}
+{(0.7\times0.4)+(0.1\times0.6)}
+\]
+
+\[
+P(Spam|Offer)=0.8235
+\]
+
+Therefore, the probability of the email being spam is approximately **82.35%**.
+
+---
+
+## 3. How Naive Bayes Works
+
+Naive Bayes calculates the probability of each possible class and predicts the class with the highest posterior probability.
+
+### Working steps
+
+1. Collect the training dataset.
+2. Separate the features and target variable.
+3. Calculate the prior probability of each class.
+4. Calculate the likelihood of each feature for each class.
+5. Apply Bayes' Theorem.
+6. Calculate posterior probabilities.
+7. Select the class with the highest probability.
+
+### Mathematical formula
+
+For multiple features:
+
+\[
+P(y|x_1,x_2,\ldots,x_n)
+\propto P(y)\prod_{i=1}^{n}P(x_i|y)
+\]
+
+Where:
+
+- \(P(y|x_1,\ldots,x_n)\): Posterior probability
+- \(P(y)\): Prior probability
+- \(P(x_i|y)\): Likelihood of feature \(x_i\) given class \(y\)
+
+The predicted class is:
+
+\[
+\hat y=\arg\max_y P(y)\prod_{i=1}^{n}P(x_i|y)
+\]
+
+---
+
+## 4. Types of Naive Bayes
+
+There are several variants of Naive Bayes, each designed for different types of data.
+
+### 4.1 Gaussian Naive Bayes
+
+Used when features are continuous numerical values and are reasonably modeled by a Gaussian (normal) distribution within each class.
+
+Examples:
+- Height
+- Weight
+- Temperature
+- Blood pressure
+
+Probability density:
+
+\[
+P(x|y)=\frac{1}{\sqrt{2\pi\sigma_y^2}}
+e^{-\frac{(x-\mu_y)^2}{2\sigma_y^2}}
+\]
+
+Python class: `GaussianNB`
+
+### 4.2 Multinomial Naive Bayes
+
+Used for discrete counts or frequency-based features.
+
+Examples:
+- Word counts
+- Document classification
+- Spam detection
+
+Python class: `MultinomialNB`
+
+### 4.3 Bernoulli Naive Bayes
+
+Used when features are binary (0 or 1).
+
+Examples:
+- Whether a word appears in an email
+- Whether a customer clicked an advertisement
+- Binary survey responses
+
+Python class: `BernoulliNB`
+
+### 4.4 Complement Naive Bayes
+
+A variant of Multinomial Naive Bayes that is particularly useful for imbalanced text classification datasets.
+
+Python class: `ComplementNB`
+
+### Comparison
+
+| Algorithm | Data type | Example |
+|---|---|---|
+| GaussianNB | Continuous | Medical measurements |
+| MultinomialNB | Counts/frequencies | Word counts |
+| BernoulliNB | Binary | Word presence |
+| ComplementNB | Counts/frequencies | Imbalanced text data |
+
+---
+
+## 5. Important Concept: Conditional Independence
+
+Naive Bayes assumes that features are conditionally independent given the target class.
+
+For example, in spam detection, it treats the presence of the words "free" and "prize" as independent once we know whether an email is spam.
+
+This assumption simplifies probability calculations.
+
+**Important:** Real-world features are not always independent. Despite this limitation, Naive Bayes often performs surprisingly well.
+
+---
+
+## 6. Laplace Smoothing
+
+### What is the Zero-Frequency Problem?
+
+Suppose the word "lottery" never appeared in the spam emails in our training dataset.
+
+Its estimated probability would be zero.
+
+When multiplying probabilities, this could make the entire class probability zero.
+
+### Solution: Laplace Smoothing
+
+Laplace smoothing adds a small value to feature counts to prevent zero probabilities.
+
+For Multinomial Naive Bayes:
+
+\[
+P(x_i|y)=
+\frac{N_{yi}+\alpha}
+{N_y+\alpha V}
+\]
+
+Where:
+
+- \(N_{yi}\): Count of feature \(i\) in class \(y\)
+- \(N_y\): Total feature counts in class \(y\)
+- \(V\): Number of unique features
+- \(\alpha\): Smoothing parameter
+
+When \(\alpha=1\), it is called Laplace smoothing.
+
+In scikit-learn, the smoothing parameter is configured using `alpha`.
+
+---
+
+## 7. Important Parameters
+
+| Parameter | Description |
+|---|---|
+| `alpha` | Controls smoothing in supported variants |
+| `fit_prior` | Whether to learn class prior probabilities |
+| `class_prior` | Manually specified class prior probabilities |
+| `var_smoothing` | Stabilizes variance calculations in GaussianNB |
+| `binarize` | Threshold for converting features into binary values in BernoulliNB |
+
+---
+
+## 8. Advantages of Naive Bayes
+
+1. Simple and easy to understand.
+2. Fast training and prediction.
+3. Works well with high-dimensional text data.
+4. Requires relatively little training data.
+5. Supports multiclass classification.
+6. Effective for spam detection and document categorization.
+
+## 9. Limitations of Naive Bayes
+
+1. Assumes conditional independence between features.
+2. Correlated features can reduce performance.
+3. Zero-frequency problems require smoothing.
+4. Probability estimates may be poorly calibrated.
+5. GaussianNB may not perform well when its distribution assumption is unsuitable.
+
+---
+
+## 10. Naive Bayes vs Other Algorithms
+
+| Feature | Naive Bayes | Logistic Regression | Decision Tree |
+|---|---|---|---|
+| Type | Probabilistic | Linear classifier | Tree-based |
+| Training speed | Very fast | Fast | Usually fast |
+| Feature assumptions | Conditional independence | Linear decision boundary | No linearity requirement |
+| Text classification | Excellent baseline | Excellent | Less commonly used |
+| Interpretability | Moderate | High | High |
+
+---
+
+# 11. Practical Implementation Using Python
+
+We will implement Gaussian Naive Bayes using the Breast Cancer Wisconsin dataset available in scikit-learn.
+
+### Step 1: Import libraries
+
+```python
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+
+from sklearn.metrics import (
+    accuracy_score,
+    confusion_matrix,
+    classification_report,
+    ConfusionMatrixDisplay
+)
+```
+
+### Step 2: Load the dataset
+
+```python
+dataset = load_breast_cancer()
+
+X = pd.DataFrame(
+    dataset.data,
+    columns=dataset.feature_names
+)
+
+y = pd.Series(dataset.target)
+
+print(X.head())
+print(y.value_counts())
+```
+
+### Step 3: Split the dataset
+
+```python
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    random_state=42,
+    stratify=y
+)
+
+print("Training data:", X_train.shape)
+print("Testing data:", X_test.shape)
+```
+
+### Step 4: Train the Naive Bayes model
+
+```python
+model = GaussianNB()
+
+model.fit(X_train, y_train)
+
+print("Model training completed!")
+```
+
+### Step 5: Make predictions
+
+```python
+y_pred = model.predict(X_test)
+
+print("Predictions:", y_pred[:10])
+```
+
+### Step 6: Evaluate the model
+
+```python
+accuracy = accuracy_score(y_test, y_pred)
+
+print("Accuracy:", accuracy)
+
+print("\nClassification Report:")
+print(
+    classification_report(
+        y_test,
+        y_pred,
+        target_names=dataset.target_names
+    )
+)
+```
+
+### Step 7: Confusion matrix
+
+```python
+cm = confusion_matrix(y_test, y_pred)
+
+display = ConfusionMatrixDisplay(
+    confusion_matrix=cm,
+    display_labels=dataset.target_names
+)
+
+display.plot(cmap="Blues")
+
+plt.title("Naive Bayes - Confusion Matrix")
+plt.show()
+```
+
+### Step 8: Predict a new sample
+
+```python
+sample = X_test.iloc[[0]]
+
+prediction = model.predict(sample)
+
+predicted_class = dataset.target_names[prediction[0]]
+
+print("Predicted class:", predicted_class)
+```
+
+---
+
+## 12. Text Classification Using Multinomial Naive Bayes
+
+Naive Bayes is especially useful for text classification.
+
+We can combine `CountVectorizer` and `MultinomialNB` in a Pipeline.
+
+```python
+from sklearn.pipeline import Pipeline
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+
+messages = [
+    "Win a free prize now",
+    "Congratulations you won a lottery",
+    "Claim your free gift",
+    "Meeting scheduled for tomorrow",
+    "Please send the project report",
+    "Let's discuss the assignment"
+]
+
+labels = [
+    "Spam",
+    "Spam",
+    "Spam",
+    "Not Spam",
+    "Not Spam",
+    "Not Spam"
+]
+
+X_train_text, X_test_text, y_train_text, y_test_text = (
+    train_test_split(
+        messages,
+        labels,
+        test_size=0.33,
+        random_state=42,
+        stratify=labels
+    )
+)
+
+text_model = Pipeline([
+    ("vectorizer", CountVectorizer()),
+    ("classifier", MultinomialNB())
+])
+
+text_model.fit(X_train_text, y_train_text)
+
+predictions = text_model.predict(X_test_text)
+
+print(classification_report(y_test_text, predictions))
+
+new_message = ["Congratulations! Claim your free prize"]
+
+print(text_model.predict(new_message))
+```
+
+The Pipeline ensures that the vocabulary is learned only from the training data.
+
+---
+
+## 13. Important Evaluation Metrics
+
+For classification problems, we use:
+
+### Accuracy
+
+\[
+Accuracy=\frac{TP+TN}{TP+TN+FP+FN}
+\]
+
+### Precision
+
+\[
+Precision=\frac{TP}{TP+FP}
+\]
+
+### Recall
+
+\[
+Recall=\frac{TP}{TP+FN}
+\]
+
+### F1-score
+
+\[
+F1=2\times\frac{Precision\times Recall}{Precision+Recall}
+\]
+
+**Important:** Do not rely only on accuracy, especially when working with imbalanced datasets.
+
+---
+
+## 14. Common Interview Questions
+
+**Q1. What is Naive Bayes?**
+
+Naive Bayes is a supervised probabilistic classification algorithm based on Bayes' Theorem and the assumption of conditional independence between features given the class.
+
+**Q2. Why is it called Naive Bayes?**
+
+Because it makes a naive assumption that features are conditionally independent given the target class.
+
+**Q3. What is Bayes' Theorem?**
+
+It calculates the posterior probability using prior probability, likelihood, and evidence.
+
+**Q4. What is Laplace smoothing?**
+
+A technique that adds a small value to feature counts to prevent zero probabilities.
+
+**Q5. What is the difference between Gaussian and Multinomial Naive Bayes?**
+
+GaussianNB handles continuous features modeled with Gaussian distributions, whereas MultinomialNB handles count or frequency features.
+
+**Q6. Can Naive Bayes handle multiclass classification?**
+
+Yes. It can calculate probabilities for multiple classes and select the most probable class.
+
+**Q7. Why is Naive Bayes useful for spam detection?**
+
+It estimates the probability of spam based on the words and their frequencies in emails.
+
+**Q8. Is Naive Bayes sensitive to correlated features?**
+
+Yes. Strongly correlated features can violate its conditional independence assumption and may affect predictions.
+
+**Q9. Does Naive Bayes require feature scaling?**
+
+Usually not. It is generally not necessary for standard Naive Bayes implementations, although feature preprocessing still depends on the data and variant.
+
+**Q10. What is the difference between prior and posterior probability?**
+
+Prior probability is the probability before observing the evidence; posterior probability is updated after considering the evidence.
+
+---
+
+## 15. Practical Challenges
+
+Complete these exercises after running the implementation.
+
+1. Train GaussianNB on the Breast Cancer dataset.
+2. Compare GaussianNB with Logistic Regression.
+3. Compare MultinomialNB and BernoulliNB on a text dataset.
+4. Experiment with different `alpha` values.
+5. Build a spam detection model using a real SMS spam dataset.
+6. Evaluate the model using precision, recall, and F1-score.
+7. Investigate how class imbalance affects predictions.
+
+---
+
+## 16. GitHub Repository Structure
+
+```text
+Machine-Learning-Daily-Learning/
+│
+├── Day-01-Introduction-to-ML/
+├── Day-02-Linear-Regression/
+├── Day-03-Logistic-Regression/
+├── Day-04-K-Nearest-Neighbors/
+├── Day-05-Decision-Trees/
+├── Day-06-Random-Forest/
+├── Day-07-Support-Vector-Machines/
+│
+├── Day-08-Naive-Bayes/
+│   ├── README.md
+│   ├── naive_bayes_classification.ipynb
+│   └── requirements.txt
+│
+└── README.md
+```
+
+### Git commands
+
+```bash
+git add .
+git commit -m "Day 08: Learn Naive Bayes"
+git push origin main
+```
+
+---
+
+## 17. Key Takeaways
+
+- Naive Bayes is based on Bayes' Theorem.
+- It is primarily used for classification.
+- It assumes conditional independence between features given the class.
+- GaussianNB is suitable for continuous features modeled by Gaussian distributions.
+- MultinomialNB is useful for count-based text features.
+- BernoulliNB is useful for binary features.
+- Laplace smoothing prevents zero-frequency probabilities.
+- It is a fast and effective baseline for many classification tasks.
+
+### Next Topic
+
+**Day 09 – Ensemble Learning: AdaBoost and Gradient Boosting**
+
+We will learn how multiple weak learners can be combined to create stronger predictive models.
