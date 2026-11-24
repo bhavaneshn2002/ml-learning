@@ -3116,11 +3116,7 @@ Machine-Learning-Daily-Learning/
 
 ### Git commands
 
-```bash
-git add .
-git commit -m "Day 08: Learn Naive Bayes"
-git push origin main
-```
+
 
 ---
 
