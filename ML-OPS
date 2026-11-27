@@ -5109,3 +5109,6 @@ Topics to cover:
 - Interview Questions.
 
 ---
+**Learning Journey:** Day 10 – XGBoost
+
+**Focus:** Understanding Extreme Gradient Boosting, Objective Functions, L1 and L2 Regularization, Gradients, Hessians, Split Gain, Hyperparameters, Feature Importance, and practical implementation using Python.
